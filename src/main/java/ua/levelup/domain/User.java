@@ -1,8 +1,11 @@
 package ua.levelup.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="USERS")
 public class User {
     private String login;
     private String password;
@@ -25,6 +28,8 @@ public class User {
         this.attemptList = attemptList;
     }
 
+    @Id
+    @Column(name="LOGIN")
     public String getLogin() {
         return login;
     }
@@ -33,6 +38,7 @@ public class User {
         this.login = login;
     }
 
+    @Column(name="PASSWORD")
     public String getPassword() {
         return password;
     }
@@ -41,6 +47,7 @@ public class User {
         this.password = password;
     }
 
+    @Column(name="NAME")
     public String getName() {
         return name;
     }
@@ -49,6 +56,9 @@ public class User {
         this.name = name;
     }
 
+    @OneToMany(mappedBy = "user",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
     public List<Attempt> getAttemptList() {
         return attemptList;
     }

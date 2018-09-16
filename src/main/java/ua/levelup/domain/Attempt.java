@@ -1,9 +1,12 @@
 package ua.levelup.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name="attempts")
 public class Attempt {
     private int id;
     private User user;
@@ -29,6 +32,9 @@ public class Attempt {
         this.givenAnswerList = givenAnswerList;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     public int getId() {
         return id;
     }
@@ -37,6 +43,8 @@ public class Attempt {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "LOGIN")
     public User getUser() {
         return user;
     }
@@ -45,6 +53,8 @@ public class Attempt {
         this.user = user;
     }
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATE")
     public Date getDate() {
         return date;
     }
@@ -53,6 +63,7 @@ public class Attempt {
         this.date = date;
     }
 
+    @Column(name = "RESULT")
     public double getResult() {
         return result;
     }
@@ -61,6 +72,9 @@ public class Attempt {
         this.result = result;
     }
 
+    @OneToMany(mappedBy = "attempt",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
     public List<GivenAnswer> getGivenAnswerList() {
         return givenAnswerList;
     }

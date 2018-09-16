@@ -1,5 +1,9 @@
 package ua.levelup.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="ANSWERS")
 public class Answer {
     private int id;
     private String answer;
@@ -16,6 +20,9 @@ public class Answer {
         this.question = question;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID")
     public int getId() {
         return id;
     }
@@ -24,6 +31,7 @@ public class Answer {
         this.id = id;
     }
 
+    @Column(name="ANSWER")
     public String getAnswer() {
         return answer;
     }
@@ -32,6 +40,7 @@ public class Answer {
         this.answer = answer;
     }
 
+    @Column(name="CORRECT")
     public boolean isCorrect() {
         return correct;
     }
@@ -40,6 +49,8 @@ public class Answer {
         this.correct = correct;
     }
 
+    @ManyToOne
+    @JoinColumn(name="QUESTION_ID")
     public Question getQuestion() {
         return question;
     }

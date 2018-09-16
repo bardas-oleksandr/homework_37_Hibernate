@@ -1,8 +1,11 @@
 package ua.levelup.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="TOPICS")
 public class Topic {
     private int id;
     private String topicName;
@@ -22,6 +25,9 @@ public class Topic {
         this.questionList = questionList;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID")
     public int getId() {
         return id;
     }
@@ -30,6 +36,7 @@ public class Topic {
         this.id = id;
     }
 
+    @Column(name="topicName")
     public String getTopicName() {
         return topicName;
     }
@@ -38,6 +45,9 @@ public class Topic {
         this.topicName = topicName;
     }
 
+    @OneToMany(mappedBy = "topic",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
     public List<Question> getQuestionList() {
         return questionList;
     }
