@@ -1,6 +1,7 @@
 package ua.levelup.domain;
 
 import javax.persistence.*;
+import java.util.Formatter;
 
 @Entity
 @Table(name="given_answers")
@@ -13,8 +14,7 @@ public class GivenAnswer {
 
     public GivenAnswer() { }
 
-    public GivenAnswer(int id, String question, String givenAnswer, boolean correct, Attempt attempt) {
-        this.id = id;
+    public GivenAnswer(String question, String givenAnswer, boolean correct, Attempt attempt) {
         this.question = question;
         this.givenAnswer = givenAnswer;
         this.correct = correct;
@@ -67,5 +67,19 @@ public class GivenAnswer {
 
     public void setAttempt(Attempt attempt) {
         this.attempt = attempt;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("question # " + id);
+        builder.append("Question: " + question);
+        builder.append("Your answer: " + givenAnswer);
+        if (correct) {
+            builder.append("IS CORRECT");
+        } else {
+            builder.append("FALSE");
+        }
+        return builder.toString();
     }
 }

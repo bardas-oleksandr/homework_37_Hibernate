@@ -6,6 +6,8 @@ import java.util.List;
 
 @Entity
 @Table(name="TOPICS")
+@NamedQueries({@NamedQuery(name="Topic.findAllWithQuestions",
+        query="select distinct t from Topic t left join fetch t.questionList")})
 public class Topic {
     private int id;
     private String topicName;
@@ -13,8 +15,7 @@ public class Topic {
 
     public Topic() { }
 
-    public Topic(int id, String topicName) {
-        this.id = id;
+    public Topic(String topicName) {
         this.topicName = topicName;
         this.questionList = new ArrayList<>();
     }
@@ -36,7 +37,7 @@ public class Topic {
         this.id = id;
     }
 
-    @Column(name="topicName")
+    @Column(name="TOPIC_NAME")
     public String getTopicName() {
         return topicName;
     }

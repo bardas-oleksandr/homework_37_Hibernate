@@ -4,20 +4,27 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//В @NamedQuery, и в целом в HQL, надо использовать фактические имена классов и полей, в не названия таблиц и столбцов
 @Entity
 @Table(name="USERS")
+@NamedQueries({
+        @NamedQuery(name="User.findByLogin",
+        query="select distinct u from User u where u.login = :login")
+})
 public class User {
     private String login;
     private String password;
     private String name;
+    private boolean adminStatus;
     private List<Attempt> attemptList;
 
     public User(){}
 
-    public User(String login, String password, String name){
+    public User(String login, String password, String name, boolean adminStatus){
         this.login = login;
         this.password = password;
         this.name = name;
+        this.adminStatus = adminStatus;
         this.attemptList = new ArrayList<>();
     }
 
@@ -69,5 +76,14 @@ public class User {
 
     public void addAttempt(Attempt attempt){
         this.attemptList.add(attempt);
+    }
+
+    @Column(name="ADMIN_STATUS")
+    public boolean isAdminStatus() {
+        return adminStatus;
+    }
+
+    public void setAdminStatus(boolean adminStatus) {
+        this.adminStatus = adminStatus;
     }
 }

@@ -13,8 +13,7 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(int id, String answer, boolean correct, Question question) {
-        this.id = id;
+    public Answer(String answer, boolean correct, Question question) {
         this.answer = answer;
         this.correct = correct;
         this.question = question;

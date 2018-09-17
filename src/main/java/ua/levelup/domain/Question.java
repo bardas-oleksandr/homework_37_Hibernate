@@ -14,8 +14,7 @@ public class Question {
 
     public Question() { }
 
-    public Question(int id, Topic topic, String question) {
-        this.id = id;
+    public Question(Topic topic, String question) {
         this.topic = topic;
         this.question = question;
         this.answerList = new ArrayList<>();

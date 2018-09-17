@@ -3,6 +3,7 @@ package ua.levelup.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 @Entity
@@ -16,8 +17,7 @@ public class Attempt {
 
     public Attempt() { }
 
-    public Attempt(int id, User user, Date date, double result) {
-        this.id = id;
+    public Attempt(User user, Date date, double result) {
         this.user = user;
         this.date = date;
         this.result = result;
@@ -85,5 +85,16 @@ public class Attempt {
 
     public void addGivenAnswer(GivenAnswer givenAnswer){
         this.givenAnswerList.add(givenAnswer);
+    }
+
+    @Override
+    public String toString(){
+        System.out.println("attempt id:" + id);
+        System.out.println("date: " + date);
+        Formatter formatter = new Formatter();
+        formatter.format("result: %.2f%%", result);
+        String result = formatter.toString();
+        formatter.close();
+        return result;
     }
 }
