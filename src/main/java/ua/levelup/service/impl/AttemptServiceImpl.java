@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 import ua.levelup.dao.AttemptDao;
 import ua.levelup.domain.Attempt;
 import ua.levelup.domain.User;
+import ua.levelup.exception.ApplicationException;
 import ua.levelup.service.AttemptService;
-import ua.levelup.service.GivenAnswerService;
+import ua.levelup.validator.AttemptValidator;
 
 import java.util.List;
 
@@ -14,21 +15,31 @@ import java.util.List;
 public class AttemptServiceImpl implements AttemptService {
 
     private AttemptDao attemptDao;
-    private GivenAnswerService givenAnswerService;
 
     @Override
     public void addNewTest(Attempt attempt) {
-
+        AttemptValidator.validateAttempt(attempt);
+        try {
+            attemptDao.addAttempt(attempt);
+        } catch (Exception e) {
+            throw new ApplicationException("Question was not created", e);
+        }
     }
 
     @Override
     public List<Attempt> watchUsersResults(User user) {
-        return null;
+        return attemptDao.getAllForUser(user);
     }
 
     @Override
-    public Attempt showLastAttempt(User user) {
-        return null;
+    public Attempt getLastAttempt(User user) {
+        return attemptDao.getLastForUser(user);
+    }
+
+    @Override
+    public void initializeGivenAnswerList(Attempt attempt) {
+        Attempt retrieved = attemptDao.getWithAnswers(attempt);
+        attempt.setGivenAnswerList(retrieved.getGivenAnswerList());
     }
 
     public AttemptDao getAttemptDao() {
@@ -38,14 +49,5 @@ public class AttemptServiceImpl implements AttemptService {
     @Autowired
     public void setAttemptDao(AttemptDao attemptDao) {
         this.attemptDao = attemptDao;
-    }
-
-    public GivenAnswerService getGivenAnswerService() {
-        return givenAnswerService;
-    }
-
-    @Autowired
-    public void setGivenAnswerService(GivenAnswerService givenAnswerService) {
-        this.givenAnswerService = givenAnswerService;
     }
 }

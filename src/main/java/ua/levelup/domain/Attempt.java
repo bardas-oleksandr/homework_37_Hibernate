@@ -7,7 +7,14 @@ import java.util.Formatter;
 import java.util.List;
 
 @Entity
-@Table(name="attempts")
+@Table(name = "attempts")
+@NamedQueries({@NamedQuery(name = "Attempt.getAllForUser",
+        query = "select distinct a from Attempt a where a.user = :user"),
+        @NamedQuery(name = "Attempt.getLastForUser",
+                query = "select distinct a from Attempt a where a.user = :user order by a.date desc"),
+        @NamedQuery(name="Attempt.getWithAnswers",
+                query="select distinct a from Attempt a left join fetch a.givenAnswerList where a.id = :id")
+})
 public class Attempt {
     private int id;
     private User user;
@@ -15,7 +22,8 @@ public class Attempt {
     private double result;
     private List<GivenAnswer> givenAnswerList;
 
-    public Attempt() { }
+    public Attempt() {
+    }
 
     public Attempt(User user, Date date, double result) {
         this.user = user;
@@ -73,8 +81,8 @@ public class Attempt {
     }
 
     @OneToMany(mappedBy = "attempt",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     public List<GivenAnswer> getGivenAnswerList() {
         return givenAnswerList;
     }
@@ -83,12 +91,12 @@ public class Attempt {
         this.givenAnswerList = givenAnswerList;
     }
 
-    public void addGivenAnswer(GivenAnswer givenAnswer){
+    public void addGivenAnswer(GivenAnswer givenAnswer) {
         this.givenAnswerList.add(givenAnswer);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         System.out.println("attempt id:" + id);
         System.out.println("date: " + date);
         Formatter formatter = new Formatter();

@@ -7,5 +7,4 @@ import java.util.List;
 public interface TopicDao {
     Topic addTopic(Topic topic);
     List<Topic> getAllWithQuestions();
-    List<Topic> getAllWithQuestionsAndAnswers();
 }

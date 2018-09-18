@@ -1,12 +1,10 @@
 package ua.levelup.dao.impl;
 
 import org.hibernate.SessionFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.levelup.dao.UserDao;
 import ua.levelup.domain.User;
-import ua.levelup.exception.ApplicationException;
 
 import javax.annotation.Resource;
 

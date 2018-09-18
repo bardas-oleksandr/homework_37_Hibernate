@@ -28,11 +28,6 @@ public class TopicDaoImpl implements TopicDao {
                 .getNamedQuery("Topic.findAllWithQuestions").list();
     }
 
-    @Override
-    public List<Topic> getAllWithQuestionsAndAnswers() {
-        return null;
-    }
-
     @Resource(name="sessionFactory")
     public void setSessionFactory(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;

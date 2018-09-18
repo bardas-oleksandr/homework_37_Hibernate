@@ -2,6 +2,7 @@ package ua.levelup.validator;
 
 import org.springframework.util.StringUtils;
 import ua.levelup.domain.Attempt;
+import ua.levelup.domain.GivenAnswer;
 import ua.levelup.exception.ValidationException;
 
 public enum AttemptValidator {
@@ -16,6 +17,9 @@ public enum AttemptValidator {
         }
         if(attempt.getResult() < 0 || attempt.getResult() > 100){
             throw new ValidationException("Test result is unacceptable");
+        }
+        for (GivenAnswer givenAnswer: attempt.getGivenAnswerList()) {
+            GivenAnswerValidator.validateGivenAnswer(givenAnswer);
         }
     }
 }

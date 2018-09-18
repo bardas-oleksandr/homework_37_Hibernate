@@ -20,7 +20,6 @@ public class ShowUsersResultsState extends State {
         final int EXIT_MODE = 0;
         final int LAST_MODE = 1;
         final int ALL_MODE = 2;
-
         System.out.println(LAST_MODE + " - Show last attempt");
         System.out.println(ALL_MODE + " - Show all attempts");
         System.out.println(EXIT_MODE + " - Previous menu");
@@ -29,15 +28,16 @@ public class ShowUsersResultsState extends State {
         switch (choice) {
             case LAST_MODE:
                 showLast();
+                AppUtil.pressEnterToContinue();
                 break;
             case ALL_MODE:
                 showAll();
+                AppUtil.pressEnterToContinue();
                 break;
             case EXIT_MODE:
             default:
                 getProcessor().setState(getStateHolder().getUserChoiceState());
         }
-        AppUtil.pressEnterToContinue();
     }
 
     public AttemptService getAttemptService() {
@@ -52,7 +52,8 @@ public class ShowUsersResultsState extends State {
     private void showLast() {
         //Покажем детальную картину последнего прохождения теста
         //Выберем общую информацию о попытках сдачи (время и результат)
-        Attempt attempt = attemptService.showLastAttempt(getProcessor().getModel().getUser());
+        Attempt attempt = attemptService.getLastAttempt(getProcessor().getModel().getUser());
+        attemptService.initializeGivenAnswerList(attempt);
 
         //Общая информация по последнему тесту
         System.out.println("===========================GENERAL INFORMATION==================================");
@@ -69,6 +70,7 @@ public class ShowUsersResultsState extends State {
 
     private void showAll() {
         List<Attempt> attemptList = attemptService.watchUsersResults(getProcessor().getModel().getUser());
+        System.out.println("===========================YOUR RESULTS========================================");
         for (Attempt attempt : attemptList) {
             System.out.println(attempt);
             System.out.println("--------------------------------------------------------------------------------");

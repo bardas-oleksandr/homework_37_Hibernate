@@ -7,7 +7,6 @@ import ua.levelup.dao.QuestionDao;
 import ua.levelup.domain.Question;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Transactional
 @Repository("questionDao")
@@ -17,13 +16,15 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public Question addQuestion(Question question) {
-        sessionFactory.getCurrentSession().save(question);
+        sessionFactory.getCurrentSession().save(question);  //Сохраняем вопрос в таблицу Questions.
+        //При этом все вложенные ответы тоже будут сохранены в таблице Answers
         return question;
     }
 
     @Override
-    public List<Question> getAllForTopic(int topicId) {
-        return null;
+    public Question getWithAnswers(Question question) {
+        return (Question)sessionFactory.getCurrentSession().getNamedQuery("Question.getWithAnswers")
+                .setParameter("id", question.getId()).uniqueResult();
     }
 
     @Resource(name="sessionFactory")

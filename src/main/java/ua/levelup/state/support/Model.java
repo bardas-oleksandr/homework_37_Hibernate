@@ -1,7 +1,6 @@
 package ua.levelup.state.support;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ua.levelup.domain.Topic;
 import ua.levelup.domain.User;
 

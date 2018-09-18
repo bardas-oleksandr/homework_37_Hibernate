@@ -33,11 +33,6 @@ public class TopicServiceImpl implements TopicService {
         return topicDao.getAllWithQuestions();
     }
 
-    @Override
-    public List<Topic> getAllWithQuestionsAndAnswers() {
-        return topicDao.getAllWithQuestionsAndAnswers();
-    }
-
     public TopicDao getTopicDao() {
         return topicDao;
     }

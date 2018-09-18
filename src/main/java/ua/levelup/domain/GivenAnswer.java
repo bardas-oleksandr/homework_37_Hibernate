@@ -1,7 +1,6 @@
 package ua.levelup.domain;
 
 import javax.persistence.*;
-import java.util.Formatter;
 
 @Entity
 @Table(name="given_answers")
@@ -73,12 +72,12 @@ public class GivenAnswer {
     public String toString(){
         StringBuilder builder = new StringBuilder();
         builder.append("question # " + id);
-        builder.append("Question: " + question);
-        builder.append("Your answer: " + givenAnswer);
+        builder.append("\tQuestion: " + question);
+        builder.append("\tYour answer: " + givenAnswer);
         if (correct) {
-            builder.append("IS CORRECT");
+            builder.append("\tIS CORRECT");
         } else {
-            builder.append("FALSE");
+            builder.append("\tFALSE");
         }
         return builder.toString();
     }
